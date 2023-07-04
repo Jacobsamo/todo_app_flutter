@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_flutter/models/Item.dart';
+import 'package:todo_app_flutter/screens/types.dart';
+import 'package:todo_app_flutter/components/ToDoItem.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -19,7 +20,9 @@ class _MyHomePageState extends State<MyHomePage> {
       createdAt: DateTime.now(),
       lastUpdated: DateTime.now(),
     );
-    items.add(newItem);
+    setState(() {
+      items.add(newItem);
+    });
   }
 
   @override
@@ -31,17 +34,12 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView.builder(
         itemCount: items.length,
         itemBuilder: (context, index) {
-          Item item = items[index];
-          return ListTile(
-            title: Text(item.title),
-            subtitle: Text(item.notes ?? ''),
-            trailing: Text(item.createdAt.toString()),
-          );
+          return ToDoItem(item: items[index]);
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: addItem,
-        tooltip: 'Increment',
+        tooltip: 'Add',
         child: const Icon(Icons.add),
       ),
     );
